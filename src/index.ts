@@ -1,10 +1,6 @@
-import * as Express from "express";
 import { ServerLoader, ServerSettings } from "@tsed/common";
-// import "@tsed/ajv"; // import ajv ts.ed module
 import "@tsed/swagger"; // import swagger Ts.ED module
 import Path = require("path");
-// @ts-ignore
-import cons = require('consolidate');
 
 
 let rootDir = Path.resolve(__dirname);
@@ -47,20 +43,9 @@ export class Server extends ServerLoader {
             .use(bodyParser.urlencoded({
                 extended: true
             }))
-        // Setup Middleware
-        this
-            // .use(GlobalAcceptMimesMiddleware)
             .use(compress({}))
             .use(methodOverride())
 
-        // Dev env specific setup
-        if (process.env.NODE_ENV === 'development') {
-            this
-                // Serve static on dev only (we use nginx for static serve in production)
-                .use(Express.static(Path.join(__dirname, './public/'), {
-                    maxAge: '5000' // uses milliseconds per docs
-                }))
-        }
     }
 
     public $afterRoutesInit() {
